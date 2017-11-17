@@ -43,5 +43,5 @@ RUN set -x \
        zlib-dev="1.2.11-r0" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
-    && ( cd "$PYENV_ROOT" && git checkout -q "v1.1.4" ) \
+    && ( cd "$PYENV_ROOT" && git checkout -q "v1.1.5" ) \
     && rm -r "$PYENV_ROOT/.git"
