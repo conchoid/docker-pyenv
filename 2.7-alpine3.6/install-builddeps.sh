@@ -23,7 +23,9 @@ apk add --no-cache \
   bzip2="1.0.6-r5" \
   curl="7.56.1-r0" \
   git="2.13.5-r0" \
+  libffi-dev="3.2.1-r3" \
   linux-headers="4.4.6-r2" \
+  mercurial="4.3.1-r0" \
   ncurses-dev="6.0_p20170930-r0" \
   openssl-dev="1.0.2m-r0" \
   openssl="1.0.2m-r0" \
