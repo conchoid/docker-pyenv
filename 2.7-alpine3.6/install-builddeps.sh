@@ -21,7 +21,7 @@ apk add --no-cache \
   build-base="0.5-r0" \
   bzip2-dev="1.0.6-r5" \
   bzip2="1.0.6-r5" \
-  curl="7.56.1-r0" \
+  curl="7.57.0-r0" \
   git="2.13.5-r0" \
   libffi-dev="3.2.1-r3" \
   linux-headers="4.4.6-r2" \
