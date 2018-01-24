@@ -26,7 +26,7 @@ apk add --no-cache \
   libffi-dev="${LIBFFI_DEV_PKG_VERSION:-3.2.1-r3}" \
   linux-headers="${LINUX_HEADERS_PKG_VERSION:-4.4.6-r2}" \
   mercurial="${MERCURIAL_PKG_VERSION:-4.3.1-r0}" \
-  ncurses-dev="${NCURSES_DEV_PKG_VERSION:-6.0_p20170930-r0}" \
+  ncurses-dev="${NCURSES_DEV_PKG_VERSION:-6.0_p20171125-r0}" \
   openssl-dev="${OPENSSL_DEV_PKG_VERSION:-1.0.2n-r0}" \
   openssl="${OPENSSL_PKG_VERSION:-1.0.2n-r0}" \
   patch="${PATCH_PKG_VERSION:-2.7.5-r1}" \
