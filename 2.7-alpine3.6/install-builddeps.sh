@@ -31,6 +31,6 @@ apk add --no-cache \
   openssl="${OPENSSL_PKG_VERSION:-1.0.2n-r0}" \
   patch="${PATCH_PKG_VERSION:-2.7.5-r1}" \
   readline-dev="${READLINE_DEV_PKG_VERSION:-6.3.008-r5}" \
-  sqlite-dev="${SQLITE_DEV_PKG_VERSION:-3.20.1-r0}" \
+  sqlite-dev="${SQLITE_DEV_PKG_VERSION:-3.20.1-r1}" \
   xz-libs="${XZ_LIBS_PKG_VERSION:-5.2.3-r0}" \
   zlib-dev="${ZLIB_DEV_PKG_VERSION:-1.2.11-r0}"
