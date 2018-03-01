@@ -29,7 +29,7 @@ apk add --no-cache \
   ncurses-dev="${NCURSES_DEV_PKG_VERSION:-6.0_p20171125-r0}" \
   openssl-dev="${OPENSSL_DEV_PKG_VERSION:-1.0.2n-r0}" \
   openssl="${OPENSSL_PKG_VERSION:-1.0.2n-r0}" \
-  patch="${PATCH_PKG_VERSION:-2.7.5-r1}" \
+  patch="${PATCH_PKG_VERSION:-2.7.5-r3}" \
   readline-dev="${READLINE_DEV_PKG_VERSION:-6.3.008-r5}" \
   sqlite-dev="${SQLITE_DEV_PKG_VERSION:-3.20.1-r1}" \
   xz-libs="${XZ_LIBS_PKG_VERSION:-5.2.3-r0}" \
