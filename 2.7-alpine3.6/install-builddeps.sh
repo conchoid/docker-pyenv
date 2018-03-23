@@ -2,6 +2,8 @@
 
 set -eux
 
+mkdir -p /var/cache/apk && ln -s /var/cache/apk /etc/apk/cache
+
 GLIBC_PKG_VERSION="${GLIBC_PKG_VERSION:-2.26-r0}"
 GLIBC_URL="https://github.com/sgerrand/alpine-pkg-glibc/releases/download/$GLIBC_PKG_VERSION"
 GLIBC_SSH_KEY="/etc/apk/keys/sgerrand.rsa.pub"
@@ -34,3 +36,5 @@ apk add --no-cache \
   sqlite-dev="${SQLITE_DEV_PKG_VERSION:-3.20.1-r1}" \
   xz-libs="${XZ_LIBS_PKG_VERSION:-5.2.3-r0}" \
   zlib-dev="${ZLIB_DEV_PKG_VERSION:-1.2.11-r0}"
+
+rm /etc/apk/cache
