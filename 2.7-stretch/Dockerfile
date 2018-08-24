@@ -1,5 +1,8 @@
 FROM python:2.7-slim-stretch
 
+# The latest pip doesn't support legacy format
+RUN pip install pip==9.0.3
+
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
