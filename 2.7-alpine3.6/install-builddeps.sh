@@ -23,8 +23,8 @@ apk add --no-cache \
   build-base="${BUILD_BASE_PKG_VERSION:-0.5-r0}" \
   bzip2-dev="${BZIP2_DEV_PKG_VERSION:-1.0.6-r5}" \
   bzip2="${BZIP2_PKG_VERSION:-1.0.6-r5}" \
-  curl="${CURL_PKG_VERSION:-7.61.0-r0}" \
-  git="${GIT_PKG_VERSION:-2.13.7-r0}" \
+  curl="${CURL_PKG_VERSION:-7.61.1-r0}" \
+  git="${GIT_PKG_VERSION:-2.13.7-r1}" \
   libffi-dev="${LIBFFI_DEV_PKG_VERSION:-3.2.1-r3}" \
   linux-headers="${LINUX_HEADERS_PKG_VERSION:-4.4.6-r2}" \
   mercurial="${MERCURIAL_PKG_VERSION:-4.5.2-r0}" \
