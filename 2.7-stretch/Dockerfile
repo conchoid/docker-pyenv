@@ -18,23 +18,23 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN PYENV_VERSION="v1.2.8" \
+RUN PYENV_VERSION="v1.2.11" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
     && git checkout -q ${PYENV_VERSION} \
-    && PYENV_PIP_MIGRATE_VERSION="198bbb4e2114abb6251bce2703f9b355945d534a" \
+    && PYENV_PIP_MIGRATE_VERSION="88f09de2a06f95bd1933b950ec2b66671ae36fbd" \
     && PYENV_PIP_MIGRATE_DIR="$PYENV_ROOT/plugins/pyenv-pip-migrate" \
     && git clone https://github.com/pyenv/pyenv-pip-migrate.git "$PYENV_PIP_MIGRATE_DIR" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q ${PYENV_PIP_MIGRATE_VERSION} \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
-RUN PYTHON2_VERSION="2.7.15" \
-    && PYTHON34_VERSION="3.4.9" \
-    && PYTHON35_VERSION="3.5.6" \
-    && PYTHON36_VERSION="3.6.7" \
-    && PYTHON37_VERSION="3.7.1" \
+RUN PYTHON2_VERSION="2.7.16" \
+    && PYTHON34_VERSION="3.4.10" \
+    && PYTHON35_VERSION="3.5.7" \
+    && PYTHON36_VERSION="3.6.8" \
+    && PYTHON37_VERSION="3.7.3" \
     && pyenv install "$PYTHON2_VERSION" \
     && pyenv install "$PYTHON34_VERSION" \
     && pyenv install "$PYTHON35_VERSION" \
