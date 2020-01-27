@@ -1,6 +1,6 @@
-FROM python:3.7.3-slim-stretch
+FROM python:3.7.6-slim-stretch
 
-RUN pip install pip==19.0.3
+RUN pip install pip==20.0.1
 
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -17,7 +17,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN PYENV_VERSION="v1.2.11" \
+RUN PYENV_VERSION="v1.2.16" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
@@ -29,14 +29,16 @@ RUN PYENV_VERSION="v1.2.11" \
     && git checkout -q ${PYENV_PIP_MIGRATE_VERSION} \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
-RUN PYTHON2_VERSION="2.7.16" \
+RUN PYTHON2_VERSION="2.7.17" \
     && PYTHON34_VERSION="3.4.10" \
-    && PYTHON35_VERSION="3.5.7" \
-    && PYTHON36_VERSION="3.6.8" \
-    && PYTHON37_VERSION="3.7.3" \
+    && PYTHON35_VERSION="3.5.9" \
+    && PYTHON36_VERSION="3.6.10" \
+    && PYTHON37_VERSION="3.7.6" \
+    && PYTHON38_VERSION="3.8.1" \
     && pyenv install "$PYTHON2_VERSION" \
     && pyenv install "$PYTHON34_VERSION" \
     && pyenv install "$PYTHON35_VERSION" \
     && pyenv install "$PYTHON36_VERSION" \
     && pyenv install "$PYTHON37_VERSION" \
-    && pyenv global system "$PYTHON2_VERSION" "$PYTHON37_VERSION" "$PYTHON36_VERSION" "$PYTHON35_VERSION" "$PYTHON34_VERSION"
+    && pyenv install "$PYTHON38_VERSION" \
+    && pyenv global system "$PYTHON2_VERSION" "$PYTHON38_VERSION" "$PYTHON37_VERSION" "$PYTHON36_VERSION" "$PYTHON35_VERSION" "$PYTHON34_VERSION"
