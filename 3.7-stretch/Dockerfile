@@ -1,4 +1,4 @@
-FROM python:3.7.6-slim-stretch
+FROM python:3.7.7-slim-stretch
 
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -21,7 +21,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN PYENV_VERSION="v1.2.16" \
+RUN PYENV_VERSION="v1.2.17" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
@@ -33,12 +33,12 @@ RUN PYENV_VERSION="v1.2.16" \
     && git checkout -q ${PYENV_PIP_MIGRATE_VERSION} \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
-RUN for VER in "3.4.10" "3.5.9" "3.6.10" "3.7.6" "3.8.1"; \
+RUN for VER in "3.5.9" "3.6.10" "3.7.7" "3.8.2"; \
     do \
       pyenv install $VER ; \
-      [ $VER = "3.4.10" ] && PIP_VER="19.1.1" || PIP_VER="$PYTHON_PIP_VERSION" ; \
-      PYENV_VERSION="$VER" pip install --upgrade pip=="$PIP_VER" ; \
+      PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" ; \
+      pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
 
-RUN [ $(pyenv versions --bare | wc -l) -eq 5 ]
+RUN [ $(pyenv versions --bare | wc -l) -eq 4 ]
