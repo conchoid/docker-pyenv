@@ -39,6 +39,7 @@ RUN for VER in "3.5.9" "3.6.10" "3.7.7" "3.8.2"; \
       PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" ; \
       pyenv rehash ; \
     done \
-    && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
+    && pyenv global system $(pyenv versions --bare | sort -rV | xargs) \
+    && pip install pipenv
 
 RUN [ $(pyenv versions --bare | wc -l) -eq 4 ]
