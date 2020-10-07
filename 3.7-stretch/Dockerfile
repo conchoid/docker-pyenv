@@ -5,8 +5,6 @@ ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 ENV CONCHOID_DOCKER_PYENV_HOME /conchoid/docker-pyenv
 
-# https://github.com/pyenv/pyenv/wiki/Common-build-problems
-## libssl1.0-dev required to build Python3.4
 RUN apt-get update \
     && apt-get install -y \
       make build-essential libssl1.0-dev zlib1g-dev libbz2-dev \
@@ -15,7 +13,6 @@ RUN apt-get update \
       locales \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-
 
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
