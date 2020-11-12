@@ -38,6 +38,7 @@ RUN for VER in "3.5.9" "3.6.10" "3.7.7" "3.8.2"; \
       pyenv install $VER ; \
       PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" ; \
       pyenv rehash ; \
+      rm -rf ${PYENV_ROOT}/versions/${VER}/lib/python3.*/test; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
 
