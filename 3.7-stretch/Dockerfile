@@ -33,11 +33,17 @@ RUN PYENV_VERSION="v1.2.20" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION" \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
+# NOTE: pyenv install does not include the system version 3.7.9.
+# System version 3.7.9. uses a symbolic link in /usr/local/.
 RUN for VER in "3.6.12" "3.7.9" "3.8.6" "3.9.0"; \
     do \
-      pyenv install $VER ; \
-      PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" ; \
-      pyenv rehash ; \
+      if [ "$VER" = "3.7.9" ] ; then \
+        ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}"; \
+      else \
+        pyenv install $VER ; \
+      fi \
+      && PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" \
+      && pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
 
