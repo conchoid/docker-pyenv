@@ -42,7 +42,7 @@ RUN for VER in "3.6.12" "3.7.9" "3.8.6" "3.9.0"; \
       else \
         pyenv install $VER ; \
       fi \
-      && PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" \
+      && PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" six \
       && pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
