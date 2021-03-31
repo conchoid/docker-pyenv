@@ -1,4 +1,4 @@
-FROM python:3.7.9-slim-stretch
+FROM python:3.7.10-slim-stretch
 
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -17,8 +17,9 @@ RUN apt-get update \
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
+ENV PYTHON_PIP_VERSION="20.3.4"
 
-RUN PYENV_VERSION="v1.2.21" \
+RUN PYENV_VERSION="1.2.24.1" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
@@ -35,9 +36,9 @@ RUN PYENV_VERSION="v1.2.21" \
 
 # NOTE: pyenv install does not include the system version 3.7.9.
 # System version 3.7.9. uses a symbolic link in /usr/local/.
-RUN for VER in "3.6.12" "3.7.9" "3.8.6" "3.9.0"; \
+RUN for VER in "3.6.13" "3.7.10" "3.8.8" "3.9.2"; \
     do \
-      if [ "$VER" = "3.7.9" ] ; then \
+      if [ "$VER" = "3.7.10" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}"; \
       else \
         pyenv install $VER ; \
