@@ -18,6 +18,7 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 ENV PYTHON_PIP_VERSION="20.3.4"
+ENV POETRY_VERSION="1.1.5"
 
 RUN PYENV_VERSION="1.2.24.1" \
     && mkdir -p "$PYENV_ROOT" \
@@ -32,7 +33,8 @@ RUN PYENV_VERSION="1.2.24.1" \
     && git clone https://github.com/pyenv/pyenv-pip-migrate.git "$PYENV_PIP_MIGRATE_DIR" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION" \
-    && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
+    && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git" \
+    && pip install poetry=="$POETRY_VERSION"
 
 # NOTE: pyenv install does not include the system version 3.7.9.
 # System version 3.7.9. uses a symbolic link in /usr/local/.
