@@ -3,8 +3,6 @@ FROM python:3.7.10-slim-stretch
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
-ENV CONCHOID_DOCKER_PYENV_HOME /conchoid/docker-pyenv
-
 RUN apt-get update \
     && apt-get install -y \
       make build-essential libssl1.0-dev zlib1g-dev libbz2-dev \
@@ -17,8 +15,8 @@ RUN apt-get update \
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV PYTHON_PIP_VERSION="20.3.4"
-ENV POETRY_VERSION="1.1.5"
+ENV ROCRO_PYTHON_PIP_VERSION="20.3.4"
+ENV ROCRO_POETRY_VERSION="1.1.5"
 
 RUN PYENV_VERSION="1.2.24.1" \
     && mkdir -p "$PYENV_ROOT" \
@@ -44,7 +42,7 @@ RUN for VER in "3.6.13" "3.7.10" "3.8.8" "3.9.2"; \
       else \
         pyenv install $VER ; \
       fi \
-      && PYENV_VERSION="$VER" pip install --upgrade pip=="$PYTHON_PIP_VERSION" six poetry=="$POETRY_VERSION" \
+      && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION" \
       && pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
