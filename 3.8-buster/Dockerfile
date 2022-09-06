@@ -22,8 +22,10 @@ RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt
 ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
-ENV ROCRO_PYTHON_PIP_VERSION="20.3.4"
-ENV ROCRO_POETRY_VERSION="1.1.5"
+ENV ROCRO_PYTHON_PIP_VERSION="21.3.1"
+ENV ROCRO_POETRY_VERSION="1.2.0"
+ENV ROCRO_PYTHON_PIP20_VERSION="20.3.4"
+ENV ROCRO_POETRY115_VERSION="1.1.5"
 
 RUN PYENV_VERSION="v2.2.2" \
     && mkdir -p "$PYENV_ROOT" \
@@ -44,16 +46,23 @@ RUN PYENV_VERSION="v2.2.2" \
 # NOTE: pyenv install does not include the system version 3.8.12.
 # System version 3.8.12. uses a symbolic link in /usr/local/.
 # Python 3.10.1 required OpenSSL 1.1.1
+# The Old PIP Version (20.3.4) is used because Python 3.6 cannot PIP Migrate from the system.
 RUN for VER in "3.6.15" "3.7.12" "3.8.12" "3.9.9" "3.10.1"; \
     do \
-      if [ "$VER" = "3.8.12" ] ; then \
-        ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}"; \
+      if [ "$VER" = "3.6.15" ] ; then \
+        pyenv install $VER \
+        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP20_VERSION" six poetry=="$ROCRO_POETRY115_VERSION"; \
+      elif [ "$VER" = "3.8.12" ] ; then \
+        ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
+        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
       elif [ "$VER" = "3.10.1" ] ; then \
-        apt-get update && apt-get install -y libssl-dev && pyenv install $VER; \
+        apt-get update && apt-get install -y libssl-dev \
+        && pyenv install $VER \
+        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
       else \
-        pyenv install $VER ; \
+        pyenv install $VER \
+        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
       fi \
-      && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six  poetry=="$ROCRO_POETRY_VERSION" \
       && pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
