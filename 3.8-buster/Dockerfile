@@ -14,6 +14,12 @@ RUN apt-get update \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 10 \
         --slave /usr/bin/g++ g++ /usr/bin/g++-7
 
+RUN echo "deb http://ftp.debian.org/debian bullseye-backports main" > /etc/apt/sources.list.d/backports.list \
+    && apt-get update \
+    && apt-get install -y -t bullseye-backports git-lfs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
     && apt-get update && apt-cache policy libssl1.0-dev && apt-get install -y libssl1.0-dev \
