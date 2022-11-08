@@ -51,7 +51,8 @@ RUN for VER in "3.6.15" "3.7.12" "3.8.12" "3.9.9" "3.10.1"; \
     do \
       if [ "$VER" = "3.6.15" ] ; then \
         pyenv install $VER \
-        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP20_VERSION" six poetry=="$ROCRO_POETRY115_VERSION"; \
+        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP20_VERSION" \
+        && PYENV_VERSION="$VER" pip install poetry=="$ROCRO_POETRY115_VERSION"; \
       elif [ "$VER" = "3.8.12" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
