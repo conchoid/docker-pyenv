@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y git \
         libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
         libncursesw5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev liblzma-dev
 
-RUN git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv -b v2.3.1
+RUN git clone --depth=1 https://github.com/pyenv/pyenv.git ~/.pyenv -b v2.3.21
 ENV PYENV_ROOT /root/.pyenv
 ENV PATH $PYENV_ROOT/bin:$PATH
 RUN echo 'eval "$(pyenv init -)"' >> ~/.bashrc
