@@ -14,6 +14,17 @@ RUN apt-get update \
     && update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 10 \
         --slave /usr/bin/g++ g++ /usr/bin/g++-7
 
+RUN wget https://www.python.org/ftp/python/3.10.14/Python-3.10.14.tgz \
+    && tar -xf Python-3.10.14.tgz \
+    && cd Python-3.10.14 \
+    && ./configure \
+    && make \
+    && make install \
+    && cd .. \
+    && rm -rf Python-3.10.14*
+
+RUN python3 --version
+
 RUN echo "deb http://ftp.debian.org/debian bullseye-backports main" > /etc/apt/sources.list.d/backports.list \
     && apt-get update \
     && apt-get install -y -t bullseye-backports git-lfs \
@@ -31,12 +42,12 @@ ENV LC_ALL en_US.UTF-8
 ENV ROCRO_PYTHON_PIP_VERSION="23.1.2"
 ENV ROCRO_POETRY_VERSION="1.5.1"
 
-RUN PYENV_VERSION="v2.3.21" \
+RUN PYENV_VERSION="v2.3.36" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
     && git checkout -q "$PYENV_VERSION" \
-    && PYTHON_BUILD_VERSION="1874f95a0eba3479dcd51faf7e8cd44b12446b6f" \
+    && PYTHON_BUILD_VERSION="465b8ee74a59766fde08867ba5686c4f41660589" \
     && cd "$PYENV_ROOT/plugins" \
     && git checkout -q "$PYTHON_BUILD_VERSION" ./python-build \
     && PYENV_PIP_MIGRATE_VERSION="1ddc347b5db9895927ea09bbe9d0e2de8ebf902b" \
@@ -47,15 +58,15 @@ RUN PYENV_VERSION="v2.3.21" \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
 
-# NOTE: pyenv install does not include the system version 3.10.12.
-# System version 3.10.12. uses a symbolic link in /usr/local/.
-# Python 3.10.12 required OpenSSL 1.1.1
-RUN for VER in "3.7.17" "3.8.17" "3.9.17" "3.10.12" "3.11.4"; \
+# NOTE: pyenv install does not include the system version 3.10.14.
+# System version 3.10.14. uses a symbolic link in /usr/local/.
+# Python 3.10.14 required OpenSSL 1.1.1
+RUN for VER in "3.7.17" "3.8.19" "3.9.19" "3.10.14" "3.11.9" "3.12.2"; \
     do \
-      if [ "$VER" = "3.10.12" ] ; then \
+      if [ "$VER" = "3.10.14" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.11.4" ] ; then \
+      elif [ "$VER" = "3.11.9" ] || [ "$VER" = "3.12.2" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
