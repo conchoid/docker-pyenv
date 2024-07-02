@@ -1,11 +1,11 @@
-FROM python:3.10.14-slim-bullseye
+FROM python:3.10.14-slim-bookworm
 
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 RUN apt-get update \
     && apt-get install -y --allow-unauthenticated \
-      gcc-10 g++-10 make build-essential zlib1g-dev libbz2-dev \
+      gcc g++ make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
       xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git git-lfs gnupg \
       locales \
