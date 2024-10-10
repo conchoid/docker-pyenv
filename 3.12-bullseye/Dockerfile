@@ -38,16 +38,15 @@ RUN PYENV_VERSION="v2.4.13" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION" \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
-# NOTE: pyenv install does not include the system version 3.11.10.
-# System version 3.11.10. uses a symbolic link in /usr/local/.
-# Python 3.11.10 required OpenSSL 1.1.1
+# NOTE: pyenv install does not include the system version 3.12.7.
+# System version 3.12.7. uses a symbolic link in /usr/local/.
 RUN for VER in "3.8.20" "3.9.20" "3.10.15" "3.11.10" "3.12.7"; \
     do \
-      if [ "$VER" = "3.11.10" ]  ; then \
+      if [ "$VER" = "3.12.7" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.15" ] || [ "$VER" = "3.12.7" ]; then \
+      elif [ "$VER" = "3.10.15" ] || [ "$VER" = "3.11.10" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
