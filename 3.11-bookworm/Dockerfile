@@ -1,4 +1,4 @@
-FROM python:3.11.9-slim-bookworm
+FROM python:3.11.10-slim-bookworm
 
 ENV PYENV_ROOT /opt/pyenv
 ENV PATH "$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -23,12 +23,12 @@ ENV LC_ALL en_US.UTF-8
 ENV ROCRO_PYTHON_PIP_VERSION="23.1.2"
 ENV ROCRO_POETRY_VERSION="1.5.1"
 
-RUN PYENV_VERSION="v2.4.4" \
+RUN PYENV_VERSION="v2.4.15" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
     && git checkout -q "$PYENV_VERSION" \
-    && PYTHON_BUILD_VERSION="d660c5a84f6b03a94961eb0e49adb2b25cd091b1" \
+    && PYTHON_BUILD_VERSION="95917cb753638cd1b9acc1d2b2c4686d8a934d10" \
     && cd "$PYENV_ROOT/plugins" \
     && git checkout -q "$PYTHON_BUILD_VERSION" ./python-build \
     && PYENV_PIP_MIGRATE_VERSION="1ddc347b5db9895927ea09bbe9d0e2de8ebf902b" \
@@ -38,16 +38,15 @@ RUN PYENV_VERSION="v2.4.4" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION" \
     && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
 
-# NOTE: pyenv install does not include the system version 3.11.9.
-# System version 3.11.9. uses a symbolic link in /usr/local/.
-# Python 3.11.9 required OpenSSL 1.1.1
-RUN for VER in "3.7.17" "3.8.19" "3.9.19" "3.10.14" "3.11.9" "3.12.2"; \
+# NOTE: pyenv install does not include the system version 3.11.10.
+# System version 3.11.10. uses a symbolic link in /usr/local/.
+RUN for VER in "3.8.20" "3.9.20" "3.10.15" "3.11.10" "3.12.7" "3.13.0"; \
     do \
-      if [ "$VER" = "3.11.9" ]  ; then \
+      if [ "$VER" = "3.11.10" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.14" ] || [ "$VER" = "3.12.2" ]; then \
+      elif [ "$VER" = "3.10.15" ] || [ "$VER" = "3.12.7" ] || [ "$VER" = "3.13.0" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
