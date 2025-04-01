@@ -26,8 +26,7 @@ RUN PYENV_VERSION="v2.4.15" \
     && PYENV_PIP_MIGRATE_DIR="$PYENV_ROOT/plugins/pyenv-pip-migrate" \
     && git clone https://github.com/pyenv/pyenv-pip-migrate.git "$PYENV_PIP_MIGRATE_DIR" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
-    && git checkout -q "$PYENV_PIP_MIGRATE_VERSION" \
-    && rm -r "$PYENV_ROOT/.git" && rm -rf " $PYENV_PIP_MIGRATE_DIR/.git"
+    && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
 # NOTE: pyenv install does not include the system version 3.11.10.
 # System version 3.11.10. uses a symbolic link in /usr/local/.
