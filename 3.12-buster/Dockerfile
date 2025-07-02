@@ -1,16 +1,7 @@
-FROM python:3.12.11-slim-bookworm
+FROM conchoid/debian:buster-python-3.12.11
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
-
-RUN apt-get update \
-    && apt-get install -y --allow-unauthenticated \
-      gcc g++ make build-essential zlib1g-dev libbz2-dev \
-      libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git git-lfs gnupg \
-      locales \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* \
-    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
@@ -28,7 +19,7 @@ RUN PYENV_VERSION="v2.6.3" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
     && git checkout -q "$PYENV_VERSION" \
-    && PYTHON_BUILD_VERSION="798d21e0ca350be54df95532bd904b391f4ca277" \
+    && PYTHON_BUILD_VERSION="95917cb753638cd1b9acc1d2b2c4686d8a934d10" \
     && cd "$PYENV_ROOT/plugins" \
     && git checkout -q "$PYTHON_BUILD_VERSION" ./python-build \
     && PYENV_PIP_MIGRATE_VERSION="1ddc347b5db9895927ea09bbe9d0e2de8ebf902b" \
