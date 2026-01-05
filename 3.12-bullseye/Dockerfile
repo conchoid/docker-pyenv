@@ -37,15 +37,15 @@ RUN PYENV_VERSION="v2.6.17" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.12.11.
-# System version 3.12.11. uses a symbolic link in /usr/local/.
-RUN for VER in "3.9.21" "3.10.16" "3.11.11" "3.12.11" "3.13.2" "3.14.2"; \
+# NOTE: pyenv install does not include the system version 3.12.12.
+# System version 3.12.12. uses a symbolic link in /usr/local/.
+RUN for VER in "3.9.25" "3.10.19" "3.11.14" "3.12.12" "3.13.11" "3.14.2"; \
     do \
-      if [ "$VER" = "3.12.11" ] ; then \
+      if [ "$VER" = "3.12.12" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.16" ] || [ "$VER" = "3.11.11" ] || [ "$VER" = "3.13.2" ] || [ "$VER" = "3.14.2" ]; then \
+      elif [ "$VER" = "3.10.19" ] || [ "$VER" = "3.11.14" ] || [ "$VER" = "3.13.11" ] || [ "$VER" = "3.14.2" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \

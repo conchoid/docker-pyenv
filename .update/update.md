@@ -11,7 +11,7 @@ https://github.com/pyenv/pyenv/tree/master のcommit hash (4a3aaf4327f1ad1c88c2d
 
 |PRE-IN|ver|eol| |
 |--|--|--|--|
-|y| 3.9.20 |  2025-10| not-supported |
+|y| 3.9.25 |  2025-10| not-supported |
 |y| 3.10.19 | 2026-10| security |
 |y| 3.11.14 | 2027-10| security |
 |y| 3.12.12 | 2028-10| pyenv/system |
@@ -27,8 +27,8 @@ https://www.python.org/dev/peps/pep-0596/
 [conchoid/docker-pyenv]:v[pyenv version]-[1 連番[-[dockerのベースイメージのpython version]-[OSコードネーム]
 conchoid/docker-pyenv:v2.6.17-1-3.12-bookworm
 
-docker-pyenv % docker build -t conchoid/docker-pyenv:v2.6.17-1-3.12-bookworm -f 3.12-bookworm/Dockerfile .
-docker-pyenv % docker build -t conchoid/docker-pyenv:v2.6.17-1-3.12-bullseye -f 3.12-bullseye/Dockerfile .
+docker build -t conchoid/docker-pyenv:v2.6.17-1-3.12-bookworm -f 3.12-bookworm/Dockerfile .
+docker build -t conchoid/docker-pyenv:v2.6.17-1-3.12-bullseye -f 3.12-bullseye/Dockerfile .
 
-docker-pyenv % docker build -t conchoid/docker-pyenv:v2.6.17-1-3.13-bookworm -f 3.13-bookworm/Dockerfile .
-docker-pyenv % docker build -t conchoid/docker-pyenv:v2.6.17-1-3.13-bullseye -f 3.13-bullseye/Dockerfile .
+docker build -t conchoid/docker-pyenv:v2.6.17-1-3.13-bookworm -f 3.13-bookworm/Dockerfile .
+docker build -t conchoid/docker-pyenv:v2.6.17-1-3.13-bullseye -f 3.13-bullseye/Dockerfile .
