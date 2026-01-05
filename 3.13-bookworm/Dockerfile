@@ -1,4 +1,4 @@
-FROM python:3.13.0-slim-bookworm
+FROM python:3.13.11-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
