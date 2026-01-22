@@ -20,8 +20,8 @@ RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
-ENV ROCRO_PYTHON_PIP_VERSION="25.0.1"
-ENV ROCRO_POETRY_VERSION="1.8.5"
+ENV ROCRO_PYTHON_PIP_VERSION="25.3"
+ENV ROCRO_POETRY_VERSION="2.3.0"
 
 RUN PYENV_VERSION="v2.6.17" \
     && mkdir -p "$PYENV_ROOT" \
