@@ -1,4 +1,4 @@
-FROM conchoid/debian:bullseye-python-3.12.12
+FROM conchoid/debian:bullseye-python-3.12.13
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -20,10 +20,10 @@ RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
-ENV ROCRO_PYTHON_PIP_VERSION="25.0.1"
-ENV ROCRO_POETRY_VERSION="1.8.5"
+ENV ROCRO_PYTHON_PIP_VERSION="24.3.1"
+ENV ROCRO_POETRY_VERSION="2.2.1"
 
-RUN PYENV_VERSION="v2.6.17" \
+RUN PYENV_VERSION="v2.6.27" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
@@ -39,13 +39,13 @@ RUN PYENV_VERSION="v2.6.17" \
 
 # NOTE: pyenv install does not include the system version 3.12.12.
 # System version 3.12.12. uses a symbolic link in /usr/local/.
-RUN for VER in "3.9.25" "3.10.19" "3.11.14" "3.12.12" "3.13.11" "3.14.2"; \
+RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
-      if [ "$VER" = "3.12.12" ] ; then \
+      if [ "$VER" = "3.12.13" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.19" ] || [ "$VER" = "3.11.14" ] || [ "$VER" = "3.13.11" ] || [ "$VER" = "3.14.2" ]; then \
+      elif [ "$VER" = "3.10.20" ] || [ "$VER" = "3.11.15" ] || [ "$VER" = "3.13.13" ] || [ "$VER" = "3.14.4" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
