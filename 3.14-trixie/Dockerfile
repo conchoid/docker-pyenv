@@ -1,4 +1,4 @@
-FROM python:3.13.11-trixie
+FROM python:3.14.2-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -12,10 +12,11 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
-    && curl -fsSL http://keyserver.ubuntu.com/pks/lookup?op=get\&search=0x3B4FE6ACC0B21F32 | gpg --dearmor -o /etc/apt/trusted.gpg.d/ubuntu-bionic.gpg \
-    && apt-get update && apt-cache policy libssl1.0-dev && apt-get install -y libssl1.0-dev \
-    && rm -f /etc/apt/sources.list.d/bionic-security.list /etc/apt/trusted.gpg.d/ubuntu-bionic.gpg
+RUN echo "deb [trusted=yes] http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
+    && apt-get update -o Acquire::AllowInsecureRepositories=true \
+    && apt-cache policy libssl1.0-dev \
+    && apt-get install -y --allow-unauthenticated libssl1.0-dev \
+    && rm -f /etc/apt/sources.list.d/bionic-security.list
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
@@ -37,15 +38,15 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.13.11.
-# System version 3.13.11. uses a symbolic link in /usr/local/.
+# NOTE: pyenv install does not include the system version 3.14.2.
+# System version 3.14.2 uses a symbolic link in /usr/local/.
 RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
-      if [ "$VER" = "3.13.13" ]  ; then \
+      if [ "$VER" = "3.14.4" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.20" ] || [ "$VER" = "3.11.15" ] || [ "$VER" = "3.12.13" ] || [ "$VER" = "3.14.4" ]; then \
+      elif [ "$VER" = "3.10.20" ] || [ "$VER" = "3.11.15" ] || [ "$VER" = "3.12.13" ] || [ "$VER" = "3.13.13" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
