@@ -1,3 +1,4 @@
+# Docker Hub: conchoid/docker-pyenv:v2.6.3-1-3.12.0-buster
 FROM conchoid/debian:buster-python-3.12.11
 
 ENV PYENV_ROOT=/opt/pyenv
