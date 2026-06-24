@@ -9,10 +9,13 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
       gcc-10 g++-10 make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget llvm libncurses5-dev libncursesw5-dev \
-      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev git git-lfs gnupg \
+      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev git gnupg \
       locales libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+RUN git lfs install
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
