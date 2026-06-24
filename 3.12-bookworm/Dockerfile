@@ -1,22 +1,18 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.12.0-bookworm
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.12.13-bookworm
 FROM python:3.12.13-slim-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 RUN apt-get update \
-    && apt-get install -y --allow-unauthenticated \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends \
       gcc g++ make build-essential zlib1g-dev libbz2-dev \
-      libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git git-lfs gnupg \
-      locales \
+      libreadline-dev libsqlite3-dev wget llvm libncurses5-dev libncursesw5-dev \
+      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev git git-lfs gnupg \
+      locales libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
-
-RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
-    && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
-    && apt-get update && apt-cache policy libssl1.0-dev && apt-get install -y libssl1.0-dev \
-    && rm -f /etc/apt/sources.list.d/bionic-security.list
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
@@ -38,17 +34,12 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.12.12.
-# System version 3.12.12. uses a symbolic link in /usr/local/.
+# NOTE: pyenv install does not include the system version 3.12.13.
+# System version 3.12.13 uses a symbolic link in /usr/local/.
 RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
       if [ "$VER" = "3.12.13" ] ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
-        && apt-get update && apt-get install -y libssl-dev \
-        && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.20" ] || [ "$VER" = "3.11.15" ] || [ "$VER" = "3.13.13" ] || [ "$VER" = "3.14.4" ]; then \
-        apt-get update && apt-get install -y libssl-dev \
-        && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
       else \
         pyenv install $VER \
