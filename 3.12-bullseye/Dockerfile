@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.12.13-bullseye
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.12.13-bullseye
 FROM conchoid/debian:bullseye-1-3.12.13-python
 
 ENV PYENV_ROOT=/opt/pyenv
