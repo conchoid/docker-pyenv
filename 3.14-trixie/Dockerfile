@@ -1,16 +1,4 @@
 # Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.14.4-trixie
-# Build git-lfs using Go 1.26.2
-FROM golang:1.26.2-trixie AS git-lfs-builder
-
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
-
-RUN git clone --depth 1 --branch v3.6.0 https://github.com/git-lfs/git-lfs.git /src/git-lfs \
-    && cd /src/git-lfs \
-    && go get golang.org/x/crypto@latest \
-    && go get golang.org/x/net@latest \
-    && go mod tidy \
-    && go build -o bin/git-lfs
-
 FROM python:3.14.2-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
@@ -25,7 +13,7 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-COPY --from=git-lfs-builder /src/git-lfs/bin/git-lfs /usr/local/bin/git-lfs
+COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
 RUN git lfs install
 
 RUN echo "deb [trusted=yes] http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
