@@ -34,8 +34,8 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.12.12.
-# System version 3.12.12. uses a symbolic link in /usr/local/.
+# NOTE: pyenv install does not include the system version 3.12.13.
+# System version 3.12.13 uses a symbolic link in /usr/local/.
 RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
       if [ "$VER" = "3.12.13" ] ; then \
