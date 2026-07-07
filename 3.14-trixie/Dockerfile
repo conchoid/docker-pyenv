@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.14.4-trixie
-FROM python:3.14.2-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.14.4-trixie
+FROM python:3.14.2-slim-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -9,7 +9,7 @@ RUN apt-get update \
       gcc g++ make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
       xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git gnupg \
-      locales \
+      locales libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 

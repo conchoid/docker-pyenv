@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.12.13-bookworm
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.12.13-bookworm
 FROM python:3.12.13-slim-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv

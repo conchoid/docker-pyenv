@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.13.13-trixie
-FROM python:3.13.11-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.13.13-trixie
+FROM python:3.13.11-slim-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -9,17 +9,12 @@ RUN apt-get update \
       gcc g++ make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
       xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git gnupg \
-      locales \
+      locales libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
 RUN git lfs install
-
-RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
-    && curl -fsSL http://keyserver.ubuntu.com/pks/lookup?op=get\&search=0x3B4FE6ACC0B21F32 | gpg --dearmor -o /etc/apt/trusted.gpg.d/ubuntu-bionic.gpg \
-    && apt-get update && apt-cache policy libssl1.0-dev && apt-get install -y libssl1.0-dev \
-    && rm -f /etc/apt/sources.list.d/bionic-security.list /etc/apt/trusted.gpg.d/ubuntu-bionic.gpg
 
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
