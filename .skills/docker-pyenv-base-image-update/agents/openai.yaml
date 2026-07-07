@@ -1,7 +1,0 @@
-interface:
-  display_name: "Docker Pyenv Base Image Update"
-  short_description: "docker-pyenv の Debian 系更新手順"
-  default_prompt: "Use $docker-pyenv-base-image-update to update docker-pyenv for a new Debian release and re-check supported Python branches."
-
-policy:
-  allow_implicit_invocation: true
