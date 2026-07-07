@@ -1,3 +1,4 @@
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.13.0-bullseye
 FROM conchoid/debian:bullseye-python-3.13.13
 
 ENV PYENV_ROOT=/opt/pyenv
@@ -7,10 +8,13 @@ RUN apt-get update \
     && apt-get install -y --allow-unauthenticated \
       gcc-10 g++-10 make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git git-lfs gnupg \
+      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git gnupg \
       locales \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+RUN git lfs install
 
 RUN echo "deb http://security.ubuntu.com/ubuntu bionic-security main" > /etc/apt/sources.list.d/bionic-security.list \
     && apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 3B4FE6ACC0B21F32 \
@@ -37,8 +41,8 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.13.11.
-# System version 3.13.11. uses a symbolic link in /usr/local/.
+# NOTE: pyenv install does not include the system version 3.13.13.
+# System version 3.13.13 uses a symbolic link in /usr/local/.
 RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
       if [ "$VER" = "3.13.13" ]  ; then \
