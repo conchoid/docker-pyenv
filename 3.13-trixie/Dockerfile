@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.13.13-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.13.13-trixie
 FROM python:3.13.11-slim-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
@@ -38,7 +38,7 @@ RUN PYENV_VERSION="v2.6.27" \
 
 # NOTE: pyenv install does not include the system version 3.13.13.
 # System version 3.13.13 uses a symbolic link in /usr/local/.
-RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
+RUN for VER in "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
     do \
       if [ "$VER" = "3.13.13" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
