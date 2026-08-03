@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-2-3.13.0-bookworm
-FROM python:3.13.11-slim-bookworm
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.13.13-bookworm
+FROM python:3.13.13-slim-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
