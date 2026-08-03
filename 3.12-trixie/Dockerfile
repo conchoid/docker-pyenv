@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.12.13-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-4-3.12.13-trixie
 FROM python:3.12.13-slim-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
