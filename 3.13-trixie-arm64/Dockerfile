@@ -1,4 +1,4 @@
-# Docker Hub: conchoid/docker-pyenv:v2.8.7-1-3.13.16-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.8.7-1-3.13.16-trixie-arm64
 FROM python:3.13.16-trixie
 
 ENV PYENV_ROOT=/opt/pyenv
@@ -13,7 +13,7 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-COPY --from=conchoid/debian:trixie-2-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+COPY --from=conchoid/debian:trixie-2-slim-arm64 /usr/local/bin/git-lfs /usr/local/bin/git-lfs
 RUN git lfs install
 
 ENV LANG=en_US.UTF-8

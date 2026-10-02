@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-3-3.13.13-bookworm
-FROM python:3.13.13-slim-bookworm
+# Docker Hub: conchoid/docker-pyenv:v2.8.7-1-3.13.16-bookworm
+FROM python:3.13.16-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -9,12 +9,12 @@ RUN apt-get update \
     && apt-get install -y --allow-unauthenticated \
       gcc g++ make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
-      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git gnupg \
+      xz-utils unixodbc-dev tk-dev libffi-dev liblzma-dev python3-openssl git connect-proxy gnupg \
       locales libssl-dev \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-COPY --from=conchoid/debian:trixie-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+COPY --from=conchoid/debian:trixie-2-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
 RUN git lfs install
 
 ENV LANG=en_US.UTF-8
@@ -23,12 +23,12 @@ ENV LC_ALL=en_US.UTF-8
 ENV ROCRO_PYTHON_PIP_VERSION="25.0.1"
 ENV ROCRO_POETRY_VERSION="2.2.1"
 
-RUN PYENV_VERSION="v2.6.27" \
+RUN PYENV_VERSION="v2.8.7" \
     && mkdir -p "$PYENV_ROOT" \
     && git clone https://github.com/pyenv/pyenv.git "$PYENV_ROOT" \
     && cd "$PYENV_ROOT" \
     && git checkout -q "$PYENV_VERSION" \
-    && PYTHON_BUILD_VERSION="ae1bb9c06133bab877dc409e93ae17b4b47837f7" \
+    && PYTHON_BUILD_VERSION="42c75f3c53f7fb3cd265cd844f2f8e193f96a628" \
     && cd "$PYENV_ROOT/plugins" \
     && git checkout -q "$PYTHON_BUILD_VERSION" ./python-build \
     && PYENV_PIP_MIGRATE_VERSION="1ddc347b5db9895927ea09bbe9d0e2de8ebf902b" \
@@ -37,15 +37,15 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.13.13.
-# System version 3.13.13 uses a symbolic link in /usr/local/.
-RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
+# NOTE: pyenv install does not include the system version 3.13.16.
+# System version 3.13.16 uses a symbolic link in /usr/local/.
+RUN for VER in "3.9.25" "3.10.22" "3.11.17" "3.12.15" "3.13.16" "3.14.8"; \
     do \
-      if [ "$VER" = "3.13.13" ]  ; then \
+      if [ "$VER" = "3.13.16" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
-      elif [ "$VER" = "3.10.20" ] || [ "$VER" = "3.11.15" ] || [ "$VER" = "3.12.13" ] || [ "$VER" = "3.14.4" ]; then \
+      elif [ "$VER" = "3.10.22" ] || [ "$VER" = "3.11.17" ] || [ "$VER" = "3.12.15" ] || [ "$VER" = "3.14.8" ]; then \
         apt-get update && apt-get install -y libssl-dev \
         && pyenv install $VER \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \
