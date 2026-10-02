@@ -1,5 +1,5 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.13.13-bullseye
-FROM conchoid/debian:bullseye-python-3.13.13
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-1-3.13.16-bullseye
+FROM conchoid/debian:bullseye-python-3.13.16
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
@@ -40,11 +40,11 @@ RUN PYENV_VERSION="v2.6.27" \
     && cd "$PYENV_PIP_MIGRATE_DIR" \
     && git checkout -q "$PYENV_PIP_MIGRATE_VERSION"
 
-# NOTE: pyenv install does not include the system version 3.13.13.
-# System version 3.13.13 uses a symbolic link in /usr/local/.
-RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.13" "3.14.4"; \
+# NOTE: pyenv install does not include the system version 3.13.16.
+# System version 3.13.16 uses a symbolic link in /usr/local/.
+RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.16" "3.14.4"; \
     do \
-      if [ "$VER" = "3.13.13" ]  ; then \
+      if [ "$VER" = "3.13.16" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
         && apt-get update && apt-get install -y libssl-dev \
         && PYENV_VERSION="$VER" pip install --upgrade pip=="$ROCRO_PYTHON_PIP_VERSION" six poetry=="$ROCRO_POETRY_VERSION"; \

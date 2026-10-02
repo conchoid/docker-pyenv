@@ -1,10 +1,11 @@
-# Docker Hub: conchoid/docker-pyenv:v2.6.27-4-3.13.16-trixie
-FROM python:3.13.16-trixie
+# Docker Hub: conchoid/docker-pyenv:v2.6.27-4-3.13.16-bookworm-slim
+FROM python:3.13.16-slim-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
 ENV PATH="$PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH"
 
 RUN apt-get update \
+    && apt-get upgrade -y \
     && apt-get install -y --allow-unauthenticated \
       gcc g++ make build-essential zlib1g-dev libbz2-dev \
       libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev libncursesw5-dev \
@@ -19,7 +20,7 @@ RUN git lfs install
 ENV LANG=en_US.UTF-8
 ENV LANGUAGE=en_US:en
 ENV LC_ALL=en_US.UTF-8
-ENV ROCRO_PYTHON_PIP_VERSION="25.3"
+ENV ROCRO_PYTHON_PIP_VERSION="25.0.1"
 ENV ROCRO_POETRY_VERSION="2.2.1"
 
 RUN PYENV_VERSION="v2.6.27" \
@@ -38,7 +39,7 @@ RUN PYENV_VERSION="v2.6.27" \
 
 # NOTE: pyenv install does not include the system version 3.13.16.
 # System version 3.13.16 uses a symbolic link in /usr/local/.
-RUN for VER in "3.10.20" "3.11.15" "3.12.13" "3.13.16" "3.14.4"; \
+RUN for VER in "3.9.25" "3.10.20" "3.11.15" "3.12.13" "3.13.16" "3.14.4"; \
     do \
       if [ "$VER" = "3.13.16" ]  ; then \
         ln -sf "/usr/local/" "${PYENV_ROOT}/versions/${VER}" \
@@ -55,3 +56,4 @@ RUN for VER in "3.10.20" "3.11.15" "3.12.13" "3.13.16" "3.14.4"; \
       && pyenv rehash ; \
     done \
     && pyenv global system $(pyenv versions --bare | sort -rV | xargs)
+
