@@ -1,4 +1,12 @@
-# Docker Hub: conchoid/docker-pyenv:v2.8.7-2-3.13.16-bookworm
+# Docker Hub: conchoid/docker-pyenv:v2.8.7-3-3.13.16-bookworm
+# Multi-architecture image (linux/amd64, linux/arm64). Build with buildx, see README.md.
+ARG TARGETARCH
+
+# conchoid/debian publishes per-architecture tags; select the one matching the target platform.
+FROM conchoid/debian:trixie-2-slim AS git-lfs-amd64
+FROM conchoid/debian:trixie-2-slim-arm64 AS git-lfs-arm64
+FROM git-lfs-${TARGETARCH} AS git-lfs
+
 FROM python:3.13.16-bookworm
 
 ENV PYENV_ROOT=/opt/pyenv
@@ -14,7 +22,7 @@ RUN apt-get update \
     && apt-get clean && rm -rf /var/lib/apt/lists/* \
     && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-COPY --from=conchoid/debian:trixie-2-slim /usr/local/bin/git-lfs /usr/local/bin/git-lfs
+COPY --from=git-lfs /usr/local/bin/git-lfs /usr/local/bin/git-lfs
 RUN git lfs install
 
 ENV LANG=en_US.UTF-8
